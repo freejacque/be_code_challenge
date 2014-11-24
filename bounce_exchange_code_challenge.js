@@ -8,11 +8,12 @@ var itemsInCart = cart.querySelectorAll("li");
 // finds the number of items in the cart
 var totalPrice = 0;
 var itemImages = [];
+var numberOfItems = 0
 for (var i = 0, len = itemsInCart.length; i < len; i++) {
-  numberOfItems = i + 1;
   var itemPrice = parseFloat(itemsInCart[i].querySelector(".product-details").querySelector(".price").innerHTML.slice(1));
   var itemTotalNumber = parseFloat(itemsInCart[i].querySelector("strong").innerHTML);
   var newPrice = itemPrice * itemTotalNumber;
+  numberOfItems += itemTotalNumber;
   totalPrice += newPrice;
   cartTotal = "$" + totalPrice;
   itemImages.push(itemsInCart[i].querySelector("a").querySelector("img").src);
@@ -53,10 +54,8 @@ var overLay = document.createElement("div").addClassName("overlay");
 var innerOverlay = document.createElement("div").addClassName("inner-overlay");
 var overlayContent = document.create
 
-var content = "Number of Items in Cart: " +
-              numberOfItems               +
-              "Total Cost: "              +
-              cartTotal;
+var contentItems = "Number of Items in Cart: " + numberOfItems + ".";
+var contentCost  = "Total Cost: "              + cartTotal + ".";
 
 function showItemPics(){
   for (var i = 0, var len = itemImages.length; i < len; i++) {
