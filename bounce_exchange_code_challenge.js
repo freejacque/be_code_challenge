@@ -54,11 +54,16 @@ var overLay = document.createElement("div").addClassName("overlay");
 var innerOverlay = document.createElement("div").addClassName("inner-overlay");
 var overlayContent = document.create
 
-var contentItems = "Number of Items in Cart: " + numberOfItems + ".";
-var contentCost  = "Total Cost: "              + cartTotal + ".";
+// takes the variables from the cart and formats the info.
+var contentItems = "There are " + numberOfItems        + " items in your cart.";
+var contentCost  = "The total cost of these items is " + cartTotal + ".";
 
+// appends item images to the div innerOverlay
 function showItemPics(){
-  for (var i = 0, var len = itemImages.length; i < len; i++) {
-    document.createElement("img").addClassName("item-img").innerHTML()
+  for (var i = 0, len = itemImages.length; i < len; i++) {
+    var newImg = new Image();
+    newImg.src = itemImages[i];
+    newImg.addClassName("div-img" + i);
+    innerOverlay.appendChild(newImg);
   };
 };
