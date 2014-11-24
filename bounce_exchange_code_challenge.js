@@ -32,17 +32,19 @@ window.onscroll = function() {
 var position = window.scrollY
 var windowHeight = window.innerHeight
 
-
+var body = document.body;
 
 window.onscroll = function (){
   console.log("scrolling!");
   var windowHeight = window.innerHeight;
   var pixelsFromTop = document.body.scrollTop;
   var bodyHeight = document.body.offsetHeight;
-  var distance = bodyHeight - windowHeight;
+  var distance = (bodyHeight - windowHeight) * .90;
   console.log(pixelsFromTop);
   if (distance < pixelsFromTop) {
     console.log("this works!");
   }
 }
 
+
+var overLay = document.createElement("div").addClassName()
