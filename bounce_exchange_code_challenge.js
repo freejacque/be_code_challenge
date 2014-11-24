@@ -31,3 +31,16 @@ window.onscroll = function() {
 // tells the distance from the top of the window
 var position = window.scrollY
 var windowHeight = window.innerHeight
+
+
+
+window.onscroll = function (){
+  console.log("scrolling!");
+  var windowHeight = window.innerHeight;
+  var pixelsFromTop = document.body.screenTop;
+  var bodyHeight = document.body.offsetHeight;
+  if (bodyHeight - windowHeight < pixelsFromTop) {
+    console.log("this works!");
+  }
+}
+
