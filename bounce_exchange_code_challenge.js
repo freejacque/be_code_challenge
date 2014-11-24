@@ -63,7 +63,7 @@ function showItemPics(){
   for (var i = 0, len = itemImages.length; i < len; i++) {
     var newImg = new Image();
     newImg.src = itemImages[i];
-    newImg.addClassName("div-img" + i);
+    newImg.addClassName("div-img " + i);
     innerOverlay.appendChild(newImg);
   };
 };
