@@ -37,9 +37,11 @@ var windowHeight = window.innerHeight
 window.onscroll = function (){
   console.log("scrolling!");
   var windowHeight = window.innerHeight;
-  var pixelsFromTop = document.body.screenTop;
+  var pixelsFromTop = document.body.scrollTop;
   var bodyHeight = document.body.offsetHeight;
-  if (bodyHeight - windowHeight < pixelsFromTop) {
+  var distance = bodyHeight - windowHeight;
+  console.log(pixelsFromTop);
+  if (distance < pixelsFromTop) {
     console.log("this works!");
   }
 }
