@@ -58,9 +58,9 @@ window.onscroll = function (){
   console.log(pixelsFromTop);
   if (distance < pixelsFromTop) {
     newPageCover = document.createElement("div").addClassName("page-cover");
+    newPageCover.setAttribute("style", "display: block; position: fixed; padding: 0; margin: 0; bottom: 0; right: 0; z-index: 999998;");
+    newPageCover.style.cssText +=';'+"width: 100%; height: 100%; background: rgba(0,0,0,0.8);";
     document.body.appendChild(newPageCover);
-    newPageCover.setAttribute("style", "position: fixed; padding: 0; margin: 0; z-index: 9999998;");
-    newPageCover.style.cssText +=';'+"width: 100%; height: 100%; background: rgba(0,0,0, 1);";
     console.log("this works!");
     overLay = document.createElement("div").addClassName("overlay").addClassName("fancybox-skin");
     newPageCover.appendChild(overLay);
