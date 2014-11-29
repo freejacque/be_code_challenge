@@ -4,7 +4,7 @@ var cart = document.body.querySelector("ol#cart-sidebar") || document.body.query
 // finds the cart
 var itemsInCart = cart.querySelectorAll("li");
 
-
+var fired = 0;
 // finds the number of items in the cart
 var totalPrice = 0;
 var itemImages = [];
@@ -48,6 +48,11 @@ function showItemPics(){
   };
 };
 
+function removeOverlay(){
+  this.parentNode.removeChild(this);
+  fired = 0;
+};
+
 // creates a scroll event that will be triggered when at the bottom 10% of the page
 window.onscroll = function (){
   console.log("scrolling!");
@@ -56,15 +61,21 @@ window.onscroll = function (){
   var bodyHeight = document.body.offsetHeight;
   var distance = (bodyHeight - windowHeight) * .90;
   console.log(pixelsFromTop);
-  if (distance < pixelsFromTop) {
+  if (distance < pixelsFromTop && fired == 0) {
     newPageCover = document.createElement("div").addClassName("page-cover");
     newPageCover.setAttribute("style", "display: block; position: fixed; padding: 0; margin: 0; bottom: 0; right: 0; z-index: 999998;");
     newPageCover.style.cssText +=';'+"width: 100%; height: 100%; background: rgba(0,0,0,0.8);";
+    newPageCover.setAttribute("id", "addedOverlay");
     document.body.appendChild(newPageCover);
+    newPageCover.addEventListener("click", removeOverlay);
     console.log("this works!");
     overLay = document.createElement("div").addClassName("overlay").addClassName("fancybox-skin");
+    overLay.setAttribute("style", "margin-left:auto; margin-right:auto; width:30em; height:21em; padding:15px;");
     newPageCover.appendChild(overLay);
     innerOverlay = document.createElement("div");
+    innerOverlay.setAttribute("style", "overflow:auto; width:28em; height:20em;");
+    overLay.appendChild(innerOverlay);
+    fired = 1;
     // takes the variables from the cart and formats the info.
     if (cart === 0 | cart === null){
       innerOverlay.innerHTML = "There are no items in your cart.";
@@ -75,4 +86,5 @@ window.onscroll = function (){
       showItemPics();
     }
   }
-}
+};
+
