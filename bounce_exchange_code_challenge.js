@@ -66,7 +66,7 @@ function createButtons(){
   closeButton.style.cssText +=';'+"text-transform:uppercase; padding:4px 0 3px;";
   closeButton.style.cssText +=';'+"margin-right: 3px; cursor:pointer; color:white;";
   closeButton.style.cssText +=';'+"text-align:center; font-size:0.85em;";
-  closeButton.style.cssText +=';'+"text-transform:uppercase;";
+  closeButton.style.cssText +=';'+"text-transform:uppercase; left:91px; top:150px;";
   closeButton.innerHTML = "Close";
   buttonsDiv.appendChild(closeButton);
   closeButton.onclick = function(){
@@ -79,7 +79,7 @@ function createButtons(){
   goToCart.style.cssText +=';'+"text-transform:uppercase; padding:4px 0 3px;";
   goToCart.style.cssText +=';'+"margin-right: 3px; cursor:pointer; color:white;";
   goToCart.style.cssText +=';'+"text-align:center; font-size:0.85em;";
-  goToCart.style.cssText +=';'+"text-transform:uppercase;";
+  goToCart.style.cssText +=';'+"text-transform:uppercase; right:91px; top:150px;";
   goToCart.innerHTML = "View Cart";
   buttonsDiv.appendChild(goToCart);
   goToCart.onclick = function(){
@@ -112,6 +112,7 @@ window.onscroll = function (){
     innerOverlay = document.createElement("div");
     innerOverlay.setAttribute("style", "overflow:auto; overflowY:scroll; width:30em;");
     innerOverlay.style.cssText +=';'+"height:auto; font-size:1.1em; margin-left:auto; margin-right:auto;"
+    innerOverlay.style.cssText +=';'+"text-align:center; line-height:2em;"
     overLay.appendChild(innerOverlay);
     fired = 1;
     // takes the variables from the cart and formats the info.
