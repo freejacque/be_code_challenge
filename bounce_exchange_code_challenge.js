@@ -1,13 +1,15 @@
-var dropDownMenu = document.body.querySelectorAll(".dropdown-menu");
 
-var cart = document.body.querySelector("ol#cart-sidebar") || document.body.querySelector("div.dropdown is-empty");
 // finds the cart
+var cart = document.body.querySelector("ol#cart-sidebar") || document.body.querySelector("div.dropdown is-empty");
 var itemsInCart = cart.querySelectorAll("li");
 var fired = 0;
+var body = document.body;
+
 // finds the number of items in the cart
 var totalPrice = 0;
 var itemImages = [];
 var numberOfItems = 0
+// calculates the price of all the items in the cart
 for (var i = 0, len = itemsInCart.length; i < len; i++) {
   var itemPrice = parseFloat(itemsInCart[i].querySelector(".product-details").querySelector(".price").innerHTML.slice(1));
   var itemTotalNumber = parseFloat(itemsInCart[i].querySelector("strong").innerHTML);
@@ -18,23 +20,6 @@ for (var i = 0, len = itemsInCart.length; i < len; i++) {
   itemImages.push(itemsInCart[i].querySelector("a").querySelector("img").src);
 };
 
-// created the body variable
-var body = document.body;
-
-function createOverlay(){
-  // creating an overlay to be triggered with scroll event
-  var overLay = document.createElement("div").addClassName("overlay");
-  overLay.addClass("fancybox-skin");
-  var innerOverlay = document.createElement("div").addClassName("inner-overlay");
-  // takes the variables from the cart and formats the info.
-  var contentItems = "There are " + numberOfItems        + " items in your cart.";
-  var contentCost  = "The total cost of these items is " + cartTotal + ".";
-  contentItems.appendTo(innerOverlay);
-  contentCost.appendTo(innerOverlay);
-  showItemPics();
-  innerOverlay.appendTo(overlay);
-  overlay.appendTo(body);
-};
 
 // appends item images to the div innerOverlay
 function showItemPics(){
@@ -55,7 +40,7 @@ function removeOverlay(){
   fired = 0;
 };
 
-// creates a close button and a view cart button
+// creates a close button and a view cart button with css
 function createButtons(){
   var buttonsDiv = document.createElement("div");
   innerOverlay.appendChild(buttonsDiv);
@@ -87,6 +72,39 @@ function createButtons(){
   };
 };
 
+// creates a page cover and a div to hold the information
+function createOverlay(){
+  newPageCover = document.createElement("div").addClassName("page-cover");
+  newPageCover.setAttribute("style", "display:block; position:fixed; padding:0;");
+  newPageCover.style.cssText +=';'+"margin:0; bottom:0; right:0; z-index:999998;";
+  newPageCover.style.cssText +=';'+"width:100%; height:100%; background:rgba(0,0,0,0.8);";
+  newPageCover.setAttribute("id", "addedOverlay");
+  document.body.appendChild(newPageCover);
+  console.log("this works!");
+  overLay = document.createElement("div").addClassName("overlay").addClassName("fancybox-skin");
+  overLay.setAttribute("style", "margin-left:auto; margin-right:auto; width:33em;");
+  overLay.style.cssText +=';'+"height:12em; padding:15px; top:6em;"
+  overLay.style.cssText +=';'+"box-shadow: 0 10px 25px rgba(0,0,0,0.5);"
+  newPageCover.appendChild(overLay);
+  innerOverlay = document.createElement("div");
+  innerOverlay.setAttribute("style", "overflow:auto; overflowY:scroll; width:30em;");
+  innerOverlay.style.cssText +=';'+"height:auto; font-size:1.1em; margin-left:auto; margin-right:auto;"
+  innerOverlay.style.cssText +=';'+"text-align:center; line-height:2em;"
+  overLay.appendChild(innerOverlay);
+  fired = 1;
+  // takes the variables from the cart and formats the info.
+  if (cart === 0 | cart === null){
+    innerOverlay.innerHTML = "There are no items in your cart.";
+  } else {
+    var contentItems = "There are " + numberOfItems        + " items in your cart. ";
+    var contentCost  = "The total cost of these items is " + cartTotal + ".";
+    innerOverlay.innerHTML = contentItems + contentCost;
+    showItemPics();
+  }
+  createButtons();
+};
+
+// grabs the logged in span and creates the overlay if the user is logged in
 var isLoggedIn = document.getElementsByClassName("myaccount-logged-in");
 if (isLoggedIn[0].innerHTML == "(Logged In)"){
 // creates a scroll event that will be triggered when at the bottom 10% of the page
@@ -98,34 +116,7 @@ if (isLoggedIn[0].innerHTML == "(Logged In)"){
     var distance = (bodyHeight - windowHeight) * .90;
     console.log(pixelsFromTop);
     if (distance < pixelsFromTop && fired == 0) {
-      newPageCover = document.createElement("div").addClassName("page-cover");
-      newPageCover.setAttribute("style", "display:block; position:fixed; padding:0;");
-      newPageCover.style.cssText +=';'+"margin:0; bottom:0; right:0; z-index:999998;";
-      newPageCover.style.cssText +=';'+"width:100%; height:100%; background:rgba(0,0,0,0.8);";
-      newPageCover.setAttribute("id", "addedOverlay");
-      document.body.appendChild(newPageCover);
-      console.log("this works!");
-      overLay = document.createElement("div").addClassName("overlay").addClassName("fancybox-skin");
-      overLay.setAttribute("style", "margin-left:auto; margin-right:auto; width:33em;");
-      overLay.style.cssText +=';'+"height:12em; padding:15px; top:6em;"
-      overLay.style.cssText +=';'+"box-shadow: 0 10px 25px rgba(0,0,0,0.5);"
-      newPageCover.appendChild(overLay);
-      innerOverlay = document.createElement("div");
-      innerOverlay.setAttribute("style", "overflow:auto; overflowY:scroll; width:30em;");
-      innerOverlay.style.cssText +=';'+"height:auto; font-size:1.1em; margin-left:auto; margin-right:auto;"
-      innerOverlay.style.cssText +=';'+"text-align:center; line-height:2em;"
-      overLay.appendChild(innerOverlay);
-      fired = 1;
-      // takes the variables from the cart and formats the info.
-      if (cart === 0 | cart === null){
-        innerOverlay.innerHTML = "There are no items in your cart.";
-      } else {
-        var contentItems = "There are " + numberOfItems        + " items in your cart. ";
-        var contentCost  = "The total cost of these items is " + cartTotal + ".";
-        innerOverlay.innerHTML = contentItems + contentCost;
-        showItemPics();
-      }
-      createButtons();
+      createOverlay();
     }
   };
 };
