@@ -38,33 +38,50 @@ function createOverlay(){
 
 // appends item images to the div innerOverlay
 function showItemPics(){
+  picsDiv = document.createElement("div");
+  innerOverlay.appendChild(picsDiv);
   for (var i = 0, len = itemImages.length; i < len; i++) {
     var newImg = new Image();
     newImg.src = itemImages[i];
     newImg.addClassName("mainImg quicklook-prodImg " + i);
-    innerOverlay.appendChild(newImg);
+    newImg.style = "border: 1px solid lightgray;";
+    picsDiv.appendChild(newImg);
   };
 };
 
+// removes the overlay from the DOM
 function removeOverlay(){
   this.parentNode.removeChild(this);
   fired = 0;
 };
 
+// creates a close button and a view cart button
 function createButtons(){
-  var closeButton = document.createElement("input");
-  closeButton.type = "button";
-  closeButton.name = "close_overlay";
-  closeButton.value = "Close"
-  innerOverlay.appendChild(closeButton);
+  var buttonsDiv = document.createElement("div");
+  innerOverlay.appendChild(buttonsDiv);
+  closeButton = document.createElement("div");
+  closeButton.addClass = "close_overlay";
+  closeButton.style.cssText = "display:inline; position:absolute;";
+  closeButton.style.cssText +=';'+"width:121px; height:29px; background:#c6631D;";
+  closeButton.style.cssText +=';'+"text-transform:uppercase; padding:4px 0 3px;";
+  closeButton.style.cssText +=';'+"margin-right: 3px; cursor:pointer; color:white;";
+  closeButton.style.cssText +=';'+"text-align:center; font-size:0.85em;";
+  closeButton.style.cssText +=';'+"text-transform:uppercase;";
+  closeButton.innerHTML = "Close";
+  buttonsDiv.appendChild(closeButton);
   closeButton.onclick = function(){
     removeOverlay();
   };
-  var goToCart = document.createElement("input");
-  goToCart.type = "button";
-  goToCart.name = "go_to_cart";
-  goToCart.value = "View Cart";
-  innerOverlay.appendChild(goToCart);
+  goToCart = document.createElement("div");
+  goToCart.addClass = "new-view-cart";
+  goToCart.style.cssText = "display:inline; position:absolute;";
+  goToCart.style.cssText +=';'+"width:121px; height:29px; background:#c6631D;";
+  goToCart.style.cssText +=';'+"text-transform:uppercase; padding:4px 0 3px;";
+  goToCart.style.cssText +=';'+"margin-right: 3px; cursor:pointer; color:white;";
+  goToCart.style.cssText +=';'+"text-align:center; font-size:0.85em;";
+  goToCart.style.cssText +=';'+"text-transform:uppercase;";
+  goToCart.innerHTML = "View Cart";
+  buttonsDiv.appendChild(goToCart);
   goToCart.onclick = function(){
     location.href = "https://www.prana.com/checkout/onepage/";
   };
@@ -85,6 +102,7 @@ window.onscroll = function (){
     newPageCover.style.cssText +=';'+"width:100%; height:100%; background:rgba(0,0,0,0.8);";
     newPageCover.setAttribute("id", "addedOverlay");
     document.body.appendChild(newPageCover);
+    newPageCover.addEventListener("click", removeOverlay);
     console.log("this works!");
     overLay = document.createElement("div").addClassName("overlay").addClassName("fancybox-skin");
     overLay.setAttribute("style", "margin-left:auto; margin-right:auto; width:33em;");
